@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import DayCell from './DayCell';
 import dayjs, { Dayjs } from 'dayjs';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 type Trabajador = {
   id: number;
   nombre: string;
@@ -19,7 +21,7 @@ const Calendar: React.FC = () => {
   const [turnosMes, setTurnosMes] = useState<Turno[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/trabajadores')
+    fetch(`${API_URL}/trabajadores`)
       .then(res => res.json())
       .then(data => setTrabajadores(data));
   }, []);
@@ -28,7 +30,7 @@ const Calendar: React.FC = () => {
     const startDate = startOfMonth.format('YYYY-MM-DD');
     const endDate = endOfMonth.format('YYYY-MM-DD');
 
-    fetch(`http://localhost:8000/turnos_rango?desde=${startDate}&hasta=${endDate}`)
+    fetch(`${API_URL}/turnos_rango?desde=${startDate}&hasta=${endDate}`)
       .then(res => res.json())
       .then(data => setTurnosMes(data));
   }, [currentDate]);
@@ -52,7 +54,7 @@ const Calendar: React.FC = () => {
 
     console.log('Asignando turno...', payload);
 
-    fetch('http://localhost:8000/asignar/', {
+    fetch(`${API_URL}/asignar/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
