@@ -21,7 +21,7 @@ const Calendar: React.FC = () => {
   const [turnosMes, setTurnosMes] = useState<Turno[]>([]);
 
   useEffect(() => {
-    fetch(`${API_URL}trabajadores`)
+    fetch('${API_URL}/trabajadores')
       .then(res => res.json())
       .then(data => setTrabajadores(data));
   }, []);
@@ -30,7 +30,7 @@ const Calendar: React.FC = () => {
     const startDate = startOfMonth.format('YYYY-MM-DD');
     const endDate = endOfMonth.format('YYYY-MM-DD');
 
-    fetch(`${API_URL}turnos_rango?desde=${startDate}&hasta=${endDate}`)
+    fetch('${API_URL}/turnos_rango?desde=${startDate}&hasta=${endDate}')
       .then(res => res.json())
       .then(data => setTurnosMes(data));
   }, [currentDate]);
@@ -54,7 +54,7 @@ const Calendar: React.FC = () => {
 
     console.log('Asignando turno...', payload);
 
-    fetch(`${API_URL}asignar/`, {
+    fetch('${API_URL}/asignar/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
